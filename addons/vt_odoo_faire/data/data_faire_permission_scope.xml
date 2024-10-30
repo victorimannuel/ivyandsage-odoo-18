@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="faire_scope_read_products" model="faire.permission.scope">
+            <field name="name">READ_PRODUCTS</field>
+            <field name="description">Fetch product information.</field>
+            <field name="type">read</field>
+        </record>
+        <record id="faire_scope_write_products" model="faire.permission.scope">
+            <field name="name">WRITE_PRODUCTS</field>
+            <field name="description">Add, update, or delete product information.</field>
+            <field name="type">write</field>
+        </record>
+        <record id="faire_scope_read_orders" model="faire.permission.scope">
+            <field name="name">READ_ORDERS</field>
+            <field name="description">Fetch order information.</field>
+            <field name="type">read</field>
+        </record>
+        <record id="faire_scope_write_orders" model="faire.permission.scope">
+            <field name="name">WRITE_ORDERS</field>
+            <field name="description">Add, update, or delete order information.</field>
+            <field name="type">write</field>
+        </record>
+        <record id="faire_scope_read_brand" model="faire.permission.scope">
+            <field name="name">READ_BRAND</field>
+            <field name="description">Fetch brand information.</field>
+            <field name="type">read</field>
+        </record>
+        <record id="faire_scope_read_retailer" model="faire.permission.scope">
+            <field name="name">READ_RETAILER</field>
+            <field name="description">Fetch retailer information.</field>
+            <field name="type">read</field>
+        </record>
+        <record id="faire_scope_read_inventories" model="faire.permission.scope">
+            <field name="name">READ_INVENTORIES</field>
+            <field name="description">Fetch inventory information.</field>
+            <field name="type">read</field>
+        </record>
+        <record id="faire_scope_write_inventories" model="faire.permission.scope">
+            <field name="name">WRITE_INVENTORIES</field>
+            <field name="description">Add, update, or delete inventory information.</field>
+            <field name="type">write</field>
+        </record>
+        <record id="faire_scope_read_shipments" model="faire.permission.scope">
+            <field name="name">READ_SHIPMENTS</field>
+            <field name="description">Fetch shipments information.</field>
+            <field name="type">read</field>
+        </record>
+    </data>
+</odoo>

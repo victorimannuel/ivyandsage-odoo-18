@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_technical_integration" name="Integrations" parent="base.menu_custom">
+            <menuitem id="menu_technical_integration_faire" name="Faire" sequence="1" action="faire_faire_action"/>
+        </menuitem>
+    </data>
+</odoo>

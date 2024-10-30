@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="success_page_template">
+        <t t-call="web.layout">
+            <div class="container mt32">
+                <h1>Authorization Successful!</h1>
+                <p>Your application has been successfully authorized. You can now use the features provided by the Faire API.</p>
+                <!-- <p><strong>Access Token:</strong> <t t-esc="request.params.accessToken" /></p> -->
+                <p><a href="/web">Go back to Dashboard</a></p>
+            </div>
+        </t>
+    </template>
+</odoo>
