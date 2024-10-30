@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-        <record id="faire_faire_view_form" model="ir.ui.view">
-            <field name="name">faire.faire.view.form</field>
-            <field name="model">faire.faire</field>
+        <record id="faire_oauth_view_form" model="ir.ui.view">
+            <field name="name">faire.oauth.view.form</field>
+            <field name="model">faire.oauth</field>
             <field name="arch" type="xml">
-                <form string="Faire v2">
+                <form string="Faire OAuth V2">
                     <header>
                         <button name="button_authorize" string="Authorize" class="btn-primary" type="object"/>
                         <field name="status" widget="statusbar"/>
@@ -31,11 +31,11 @@
                 </form>
             </field>
         </record>
-        <record id="faire_faire_view_list" model="ir.ui.view">
-            <field name="name">faire.faire.view.list</field>
-            <field name="model">faire.faire</field>
+        <record id="faire_oauth_view_list" model="ir.ui.view">
+            <field name="name">faire.oauth.view.list</field>
+            <field name="model">faire.oauth</field>
             <field name="arch" type="xml">
-                <list string="Faire Integration">
+                <list string="Faire OAuth V2">
                     <field name="name"/>
                     <field name="date_request"/>
                     <field name="status"/>
@@ -43,11 +43,11 @@
                 </list>
             </field>
         </record>
-        <record id="faire_faire_action" model="ir.actions.act_window">
-            <field name="name">Faire Integration</field>
-            <field name="res_model">faire.faire</field>
+        <record id="faire_oauth_action" model="ir.actions.act_window">
+            <field name="name">Faire OAuth V2</field>
+            <field name="res_model">faire.oauth</field>
             <field name="view_mode">list,form</field>
-            <field name="view_id" ref="faire_faire_view_list"/>
+            <field name="view_id" ref="faire_oauth_view_list"/>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
                 Add a new account

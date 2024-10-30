@@ -15,7 +15,7 @@ class FaireAuthController(http.Controller):
         authorization_code = kwargs.get('authorizationCode')
         state = kwargs.get('state')
         
-        faire = request.env['faire.faire'].sudo().search([('active', '=', True), ('state', '=', state)], limit=1)
+        faire = request.env['faire.oauth'].sudo().search([('active', '=', True), ('state', '=', state)], limit=1)
         
         if authorization_code and faire:
             faire.authorization_code = authorization_code

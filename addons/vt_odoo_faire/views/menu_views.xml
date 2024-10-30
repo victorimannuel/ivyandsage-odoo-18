@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-        <menuitem id="menu_technical_integration" name="Integrations" parent="base.menu_custom">
-            <menuitem id="menu_technical_integration_faire" name="Faire" sequence="1" action="faire_faire_action"/>
+        <!-- Faire -->
+        <menuitem id="faire_menu_root" name="Faire" web_icon="vt_odoo_faire,static/description/icon.png" sequence="10">
+            <!-- Faire/Orders -->
+            <menuitem id="faire_order_menu" name="Orders" action="sale.action_orders" sequence="10"/>
+            <!-- Faire/Customer -->
+            <menuitem id="faire_customer_menu" name="Customers" action="account.res_partner_action_customer" sequence="20"/>
+            <!-- Faire/Products -->
+            <menuitem id="faire_product_menu" name="Products" action="sale.product_template_action" sequence="30"/>
+            <!-- Faire/Configuration -->
+            <menuitem id="faire_configuration_menu_sub" name="Configuration" sequence="40">
+                <!-- Faire/Configuration/OAuth V2 -->
+                <menuitem id="faire_configuration_oauth_menu" name="OAuth V2" sequence="10" action="faire_oauth_action"/>
+            </menuitem>
         </menuitem>
     </data>
 </odoo>

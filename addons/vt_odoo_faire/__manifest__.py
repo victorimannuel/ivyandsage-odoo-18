@@ -8,14 +8,16 @@
     'category': 'Extra Tools',
     'version': '18.0',
     'depends': [
-        'base'
+        'account',
+        'base',
+        'sale',
     ],
     'demo': [
     ],
     'data': [
         'data/data_faire_permission_scope.xml',
         'security/ir.model.access.csv',
-        'views/faire_views.xml',
+        'views/faire_oauth_views.xml',
         'views/menu_views.xml',
         'views/success_page_template.xml',
     ],

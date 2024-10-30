@@ -1,4 +1,4 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"access_faire_faire_crud","access_faire_faire_crud","vt_odoo_faire.model_faire_faire","base.group_system",1,1,1,1
-"access_faire_faire_r","access_faire_faire_r","vt_odoo_faire.model_faire_faire","",1,0,0,0
+"access_faire_oauth_crud","access_faire_oauth_crud","vt_odoo_faire.model_faire_oauth","base.group_system",1,1,1,1
+"access_faire_oauth_r","access_faire_oauth_r","vt_odoo_faire.model_faire_oauth","",1,0,0,0
 "access_faire_permission_scope_r","access_faire_permission_scope_r","vt_odoo_faire.model_faire_permission_scope","",1,0,0,0
