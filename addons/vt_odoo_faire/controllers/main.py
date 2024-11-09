@@ -28,6 +28,7 @@ class FaireAuthController(http.Controller):
             if access_token_data:
                 faire.sudo().write({
                     'oauth_access_token': access_token_data.get('accessToken'),
+                    'token_type': access_token_data.get('tokenType'),
                     'status': 'active',
                 })
                 
@@ -42,7 +43,7 @@ class FaireAuthController(http.Controller):
             "application_token": application_id,
             "application_secret": secret_id,
             "redirect_url": redirect_url,
-            "scope": json.dumps([scope.name for scope in scope_ids]),
+            "scope": [scope.name for scope in scope_ids],
             "grant_type": "AUTHORIZATION_CODE",
             "authorization_code": authorization_code,
         }

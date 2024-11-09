@@ -1,6 +1,11 @@
 import random
 import string
+import logging
+import requests
 from odoo import api, fields, models, _
+from odoo.http import request
+
+_logger = logging.getLogger(__name__)
 
 
 def generate_random_state():
@@ -55,4 +60,30 @@ class Faire(models.Model):
             'target': 'new',
         }
         
+    def button_authenticate(self):
+        """Retrieve access token using authorization code."""
+        token_url = "https://www.faire.com/api/external-api-oauth2/token"
         
+        payload = {
+            "application_token": self.application_id,
+            "application_secret": self.secret_id,
+            "redirect_url": self.redirect_url,
+            "scope": [scope.name for scope in self.scope_ids],
+            "grant_type": "AUTHORIZATION_CODE",
+            "authorization_code": self.authorization_code,
+        }
+        
+        _logger.info("Access token payload: %s", payload)
+        response = requests.post(token_url, json=payload)
+        _logger.info("Access token response: %s", response)
+        
+        if response.status_code == 200:
+            json_response = response.json()
+            self.write({
+                'oauth_access_token': json_response.get('accessToken'),
+                'token_type': json_response.get('tokenType'),
+                'status': 'active',
+            })
+        else:
+            # Handle errors (log the error or raise an exception)
+            return None
