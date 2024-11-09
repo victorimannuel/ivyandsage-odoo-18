@@ -24,9 +24,11 @@ class Faire(models.Model):
         ('active', 'Active'),
         ('expired', 'Expired'),
     ], default='idle')
+    redirect_url = fields.Char(string="Redirect URL", readonly=True)
     authorization_url = fields.Char(string="Authorization URL", readonly=True)
     authorization_code = fields.Char(string="Authorization Code", readonly=True)
     oauth_access_token = fields.Char(string="OAuth Access Token", readonly=True)
+    token_type = fields.Char(string="Token Type", readonly=True)
     
     
     def button_authorize(self):
@@ -39,6 +41,7 @@ class Faire(models.Model):
         state = generate_random_state()
         base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         redirect_url = f'{base_url}/faire/oauth2/authorization-callback'
+        self.redirect_url = redirect_url
         auth_url = f"https://faire.com/oauth2/authorize?applicationId={application_id}&scope={','.join(scope)}&state={state}&redirectUrl={redirect_url}"
         
         # Update fields

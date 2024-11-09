@@ -22,9 +22,11 @@
                             <group>
                                 <field name="date_request"/>
                                 <field name="state"/>
+                                <field name="redirect_url" widget="url"/>
                                 <field name="authorization_url" widget="url"/>
                                 <field name="authorization_code" widget="password"/>
                                 <field name="oauth_access_token" widget="password"/>
+                                <field name="token_type" widget="password"/>
                             </group>
                         </group>
                     </sheet>
