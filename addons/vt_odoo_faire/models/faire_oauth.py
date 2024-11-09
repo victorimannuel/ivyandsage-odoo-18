@@ -77,11 +77,13 @@ class Faire(models.Model):
 
         _logger.info("Access token payload: %s", payload)
 
-        # Send POST request
-        headers = {"Content-Type": "application/x-www-form-urlencoded"}
-        response = requests.post(token_url, data=payload, headers=headers)
-        # headers = {"Content-Type": "application/json"}
-        # response = requests.post(token_url, json=payload, headers=headers)
+        # Send POST request using form-urlencoded
+        # headers = {"Content-Type": "application/x-www-form-urlencoded"}
+        # response = requests.post(token_url, data=payload, headers=headers)
+        
+        # Send POST request using json
+        headers = {"Content-Type": "application/json"}
+        response = requests.post(token_url, json=payload, headers=headers)
 
         # Log the response content for debugging
         _logger.info("Access token response: %s", response.text)
