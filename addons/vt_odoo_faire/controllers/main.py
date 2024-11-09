@@ -18,30 +18,36 @@ class FaireAuthController(http.Controller):
         faire = request.env['faire.oauth'].sudo().search([('active', '=', True), ('state', '=', state)], limit=1)
         
         if authorization_code and faire:
-            faire.authorization_code = authorization_code
+            faire.write({
+                'authorization_code': authorization_code
+            })
             
-            access_token_data = self.get_access_token(faire.application_id, faire.secret_id, faire.scope_ids, authorization_code)
+            access_token_data = self.get_access_token(faire.application_id, faire.secret_id, faire.redirect_url, faire.scope_ids, authorization_code)
             if access_token_data:
-                faire.oauth_access_token = access_token_data.get('accessToken')
-                faire.status = 'active'
+                faire.write({
+                    'oauth_access_token': access_token_data.get('accessToken'),
+                    'status': 'active',
+                })
                 
         return request.redirect('/faire/oauth2/success')
     
     
-    def get_access_token(self, application_id, secret_id, scope_ids, authorization_code):
+    def get_access_token(self, application_id, secret_id, redirect_url, scope_ids, authorization_code):
         """Retrieve access token using authorization code."""
         token_url = "https://www.faire.com/api/external-api-oauth2/token"
         
         payload = {
             "application_token": application_id,
             "application_secret": secret_id,
-            "redirect_url": f"{request.httprequest.url_root}/faire/oauth2/authorization-callback",
-            "scope": [scope.name for scope in scope_ids],
+            "redirect_url": redirect_url,
+            "scope": ','.join([scope.name for scope in scope_ids]),
             "grant_type": "AUTHORIZATION_CODE",
             "authorization_code": authorization_code,
         }
         
+        _logger.info("Access token payload: %s", response)
         response = requests.post(token_url, json=payload)
+        _logger.info("Access token response: %s", response)
         if response.status_code == 200:
             return response.json()  # Returns access token data
         else:

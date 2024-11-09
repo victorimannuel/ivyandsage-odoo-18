@@ -10,7 +10,7 @@ def generate_random_state():
 
 class Faire(models.Model):
     _name = "faire.oauth"
-    _desc = "Faire OAuth"
+    _description = "Faire OAuth"
     
     active = fields.Boolean(string="Active", default=True)
     name = fields.Char(string="Name")
