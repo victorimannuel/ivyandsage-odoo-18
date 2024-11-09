@@ -65,12 +65,12 @@ class Faire(models.Model):
         token_url = "https://www.faire.com/api/external-api-oauth2/token"
         
         payload = {
-            "application_token": self.application_id,
-            "application_secret": self.secret_id,
-            "redirect_url": self.redirect_url,
+            "applicationId": self.application_id,
+            "applicationSecret": self.secret_id,
+            "redirectUrl": self.redirect_url,
             "scope": [scope.name for scope in self.scope_ids],
-            "grant_type": "AUTHORIZATION_CODE",
-            "authorization_code": self.authorization_code,
+            "grantType": "AUTHORIZATION_CODE",
+            "authorizationCode": self.authorization_code,
         }
         
         _logger.info("Access token payload: %s", payload)
