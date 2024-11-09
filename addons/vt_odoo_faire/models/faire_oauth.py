@@ -64,19 +64,25 @@ class Faire(models.Model):
         """Retrieve access token using authorization code."""
         token_url = "https://www.faire.com/api/external-api-oauth2/token"
         
+        # Prepare the payload
         payload = {
             "applicationId": self.application_id,
             "applicationSecret": self.secret_id,
-            "redirectUrl": self.redirect_url,
-            "scope": " ".join([scope.name for scope in self.scope_ids]),
-            "grantType": "AUTHORIZATION_CODE",
-            "authorizationCode": self.authorization_code,
+            "redirectUrl": self.redirect_url,  # Ensure this URL matches the registered one exactly
+            "scope": " ".join([scope.name for scope in self.scope_ids]),  # Ensure scope format is correct
+            "grantType": "AUTHORIZATION_CODE",  # Ensure this matches the required value
+            "authorizationCode": self.authorization_code,  # Ensure this code is valid
         }
         
         _logger.info("Access token payload: %s", payload)
-        response = requests.post(token_url, json=payload)
-        _logger.info("Access token response: %s", response)
-        
+
+        # Send POST request
+        headers = {"Content-Type": "application/json"}
+        response = requests.post(token_url, json=payload, headers=headers)
+
+        # Log the response content for debugging
+        _logger.info("Access token response: %s", response.text)
+
         if response.status_code == 200:
             json_response = response.json()
             self.write({
@@ -85,5 +91,6 @@ class Faire(models.Model):
                 'status': 'active',
             })
         else:
-            # Handle errors (log the error or raise an exception)
+            # Log the detailed error for debugging purposes
+            _logger.error("Error retrieving access token: %s", response.text)
             return None
