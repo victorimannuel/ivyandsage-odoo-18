@@ -12,7 +12,7 @@ class FaireAuthController(http.Controller):
         """Handles the OAuth callback and retrieves the authorization code."""
         
         _logger.info("OAuth callback accessed with params: %s", kwargs)
-        authorization_code = kwargs.get('authorizationCode')
+        authorization_code = kwargs.get('authorization_code')
         state = kwargs.get('state')
         
         faire = request.env['faire.oauth'].sudo().search([('active', '=', True), ('state', '=', state)], limit=1)
