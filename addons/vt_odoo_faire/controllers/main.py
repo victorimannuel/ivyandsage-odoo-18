@@ -45,7 +45,7 @@ class FaireAuthController(http.Controller):
             "authorization_code": authorization_code,
         }
         
-        _logger.info("Access token payload: %s", response)
+        _logger.info("Access token payload: %s", payload)
         response = requests.post(token_url, json=payload)
         _logger.info("Access token response: %s", response)
         if response.status_code == 200:
