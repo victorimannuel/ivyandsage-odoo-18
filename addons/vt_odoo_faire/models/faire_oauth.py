@@ -69,7 +69,8 @@ class Faire(models.Model):
             "applicationId": self.application_id,
             "applicationSecret": self.secret_id,
             "redirectUrl": self.redirect_url,  # Ensure this URL matches the registered one exactly
-            "scope": " ".join([scope.name for scope in self.scope_ids]),  # Ensure scope format is correct
+            # "scope": " ".join([scope.name for scope in self.scope_ids]),  # Ensure scope format is correct
+            "scope": [scope.name for scope in self.scope_ids],  # Ensure scope format is correct
             "grantType": "AUTHORIZATION_CODE",  # Ensure this matches the required value
             "authorizationCode": self.authorization_code,  # Ensure this code is valid
         }
