@@ -68,7 +68,7 @@ class Faire(models.Model):
             "applicationId": self.application_id,
             "applicationSecret": self.secret_id,
             "redirectUrl": self.redirect_url,
-            "scope": [scope.name for scope in self.scope_ids],
+            "scope": " ".join([scope.name for scope in self.scope_ids]),
             "grantType": "AUTHORIZATION_CODE",
             "authorizationCode": self.authorization_code,
         }
