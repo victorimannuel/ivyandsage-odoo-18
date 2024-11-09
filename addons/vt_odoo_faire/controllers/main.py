@@ -16,15 +16,15 @@ class FaireAuthController(http.Controller):
         state = kwargs.get('state')
         
         faire = request.env['faire.oauth'].sudo().search([('active', '=', True), ('state', '=', state)], limit=1)
-        
+        _logger.info("Faire oAuth record: %s", faire)
         if authorization_code and faire:
-            faire.write({
+            faire.sudo().write({
                 'authorization_code': authorization_code
             })
             
             access_token_data = self.get_access_token(faire.application_id, faire.secret_id, faire.redirect_url, faire.scope_ids, authorization_code)
             if access_token_data:
-                faire.write({
+                faire.sudo().write({
                     'oauth_access_token': access_token_data.get('accessToken'),
                     'status': 'active',
                 })
