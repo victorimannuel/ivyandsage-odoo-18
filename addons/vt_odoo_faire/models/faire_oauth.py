@@ -74,12 +74,14 @@ class Faire(models.Model):
             "grantType": "AUTHORIZATION_CODE",  # Ensure this matches the required value
             "authorizationCode": self.authorization_code,  # Ensure this code is valid
         }
-        
+
         _logger.info("Access token payload: %s", payload)
 
         # Send POST request
-        headers = {"Content-Type": "application/json"}
-        response = requests.post(token_url, json=payload, headers=headers)
+        headers = {"Content-Type": "application/x-www-form-urlencoded"}
+        response = requests.post(token_url, data=payload, headers=headers)
+        # headers = {"Content-Type": "application/json"}
+        # response = requests.post(token_url, json=payload, headers=headers)
 
         # Log the response content for debugging
         _logger.info("Access token response: %s", response.text)
