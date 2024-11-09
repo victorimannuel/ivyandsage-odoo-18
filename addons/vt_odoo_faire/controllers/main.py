@@ -1,7 +1,9 @@
+import json
+import logging
 import requests
 from odoo import http
 from odoo.http import request
-import logging
+
 _logger = logging.getLogger(__name__)
 
 
@@ -40,7 +42,7 @@ class FaireAuthController(http.Controller):
             "application_token": application_id,
             "application_secret": secret_id,
             "redirect_url": redirect_url,
-            "scope": ','.join([scope.name for scope in scope_ids]),
+            "scope": json.dumps([scope.name for scope in scope_ids]),
             "grant_type": "AUTHORIZATION_CODE",
             "authorization_code": authorization_code,
         }
