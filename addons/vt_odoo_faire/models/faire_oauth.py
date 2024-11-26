@@ -66,13 +66,13 @@ class Faire(models.Model):
         
         # Prepare the payload
         payload = {
-            "applicationId": self.application_id,
-            "applicationSecret": self.secret_id,
-            "redirectUrl": self.redirect_url,  # Ensure this URL matches the registered one exactly
+            "application_token": self.application_id,
+            "application_secret": self.secret_id,
+            "redirect_url": self.redirect_url,  # Ensure this URL matches the registered one exactly
             # "scope": " ".join([scope.name for scope in self.scope_ids]),  # Ensure scope format is correct
             "scope": [scope.name for scope in self.scope_ids],  # Ensure scope format is correct
-            "grantType": "AUTHORIZATION_CODE",  # Ensure this matches the required value
-            "authorizationCode": self.authorization_code,  # Ensure this code is valid
+            "grant_type": "AUTHORIZATION_CODE",  # Ensure this matches the required value
+            "authorization_code": self.authorization_code,  # Ensure this code is valid
         }
 
         _logger.info("Access token payload: %s", payload)
