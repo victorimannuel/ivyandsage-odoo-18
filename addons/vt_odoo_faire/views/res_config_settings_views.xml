@@ -31,7 +31,7 @@
                                     <field name="faire_api_grant_type" placeholder="AUTHORIZATION_CODE" help="Fill with 'AUTHORIZATION_CODE'"/>
                                 </div>
                                 <div class="row mt16">
-                                    <label string="Redirect URL" for="faire_api_redirect_u  rl" class="col-lg-3 o_light_label"/>
+                                    <label string="Redirect URL" for="faire_api_redirect_url" class="col-lg-3 o_light_label"/>
                                     <field name="faire_api_redirect_url" placeholder="Base URL + oAuth callback url"/>
                                 </div>
                                 <div class="row mt16">
