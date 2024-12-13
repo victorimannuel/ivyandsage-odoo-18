@@ -2,9 +2,9 @@
 <odoo>
     <data>
         <!-- Faire -->
-        <menuitem id="faire_menu_root" name="Faire" web_icon="vt_odoo_faire,static/description/faire-logo.png" sequence="10">
+        <menuitem id="faire_menu_root" name="Faire" web_icon="vt_odoo_faire,static/description/icon.png" sequence="10">
             <!-- Faire/Orders -->
-            <menuitem id="faire_order_menu" name="Orders" action="sale.action_orders" sequence="10"/>
+            <menuitem id="faire_order_menu" name="Orders" action="faire_order_action" sequence="10"/>
             <!-- Faire/Customer -->
             <menuitem id="faire_customer_menu" name="Customers" action="account.res_partner_action_customer" sequence="20"/>
             <!-- Faire/Products -->

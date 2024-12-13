@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.vt.odoo.faire</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <app string="Faire" data-string="Faire" name="vt_odoo_faire">
+                        <block title="API Service" name="fiscal_localization_setting_container" invisible="not is_root_company">
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label string="Application ID" for="faire_application_id" class="col-lg-3 o_light_label"/>
+                                    <field name="faire_application_id" placeholder="Application ID"/>
+                                </div>
+                                <div class="row mt16">
+                                    <label string="Secret ID" for="faire_application_secret_id" class="col-lg-3 o_light_label"/>
+                                    <field name="faire_application_secret_id" password="True" placeholder="Secret of your Faire app"/>
+                                </div>
+                                <div class="row mt16">
+                                    <label string="State Code" for="faire_api_state_code" class="col-lg-3 o_light_label"/>
+                                    <field name="faire_api_state_code" force_save="1"/>
+                                </div>
+                                <div class="row mt16">
+                                    <label string="Permission Scope" for="faire_api_permission_scope" class="col-lg-3 o_light_label"/>
+                                    <field name="faire_api_permission_scope" placeholder='e.g. ["READ_ORDERS", "READ_PRODUCTS"]'/>
+                                </div>
+                                <div class="row mt16">
+                                    <label string="Grant Type" for="faire_api_grant_type" class="col-lg-3 o_light_label"/>
+                                    <field name="faire_api_grant_type" placeholder="AUTHORIZATION_CODE" help="Fill with 'AUTHORIZATION_CODE'"/>
+                                </div>
+                                <div class="row mt16">
+                                    <label string="Redirect URL" for="faire_api_redirect_u  rl" class="col-lg-3 o_light_label"/>
+                                    <field name="faire_api_redirect_url" placeholder="Base URL + oAuth callback url"/>
+                                </div>
+                                <div class="row mt16">
+                                    <label string="Authorization Code" for="faire_authorization_code" class="col-lg-3 o_light_label"/>
+                                    <field name="faire_authorization_code"/>
+                                </div>
+                                <div class="row mt16">
+                                    <label string="OAuth Access Token" for="faire_oauth_access_token" class="col-lg-3 o_light_label"/>
+                                    <field name="faire_oauth_access_token" password="True"/>
+                                </div>
+                            </div>
+                            <notebook class="mt-5">
+                                <page name="service" string="Services">
+                                    <group invisible="not faire_oauth_access_token">
+                                        <button name="faire_get_all_orders" string="Sync Orders from Faire" class="btn-primary" type="object"/>
+                                    </group>
+                                </page>
+                                <page name="connection" string="Connections">
+                                    <group invisible="faire_oauth_access_token">
+                                        <button name="faire_authorize" string="Authorize" class="btn-warning" type="object"/>
+                                        <button name="faire_authenticate" string="Authenticate" class="btn-success" type="object"/>
+                                    </group>
+                                    <group invisible="not faire_oauth_access_token">
+                                        <button name="faire_revoke" string="Revoke Token" class="btn-danger" type="object" confirm="Are you sure to revoke the current token?"/>
+                                    </group>
+                                </page>
+                            </notebook>
+                        </block>
+                    </app>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
