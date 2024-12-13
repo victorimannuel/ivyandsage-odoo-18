@@ -55,7 +55,7 @@ class FaireOrder(models.Model):
         ('PROMO_CODE', 'Promo Code'),
         ('FREE_SHIPPING_THRESHOLD', 'Free Shipping Threshold'),
         ('EXTERNAL_FREE_SHIPPING_REASON_UNKNOWN', 'External Free Shipping Reason Unknown'),
-    ], string='State', help="""
+    ], string='Free Shipping Reason', help="""
         Insider Free Shipping: The order has Insider free shipping.
         Faire Direct: The free shipping is due to a Faire Direct relationship.
         Brand Discount: The free shipping is due to a brand discount.
