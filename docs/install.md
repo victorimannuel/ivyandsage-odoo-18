@@ -3,6 +3,7 @@
 # ivyandsage modules
 install ias_sale
 install vt_odoo_faire
+install orderflow_app
 
 # external modules
 install ica_web_responsive
