@@ -47,6 +47,7 @@
                                 <page name="service" string="Services">
                                     <group invisible="not faire_oauth_access_token">
                                         <button name="faire_get_all_orders" string="Sync Orders from Faire" class="btn-primary" type="object"/>
+                                        <button name="faire_get_all_products" string="Sync Products from Faire" class="btn-warning" type="object"/>
                                     </group>
                                 </page>
                                 <page name="connection" string="Connections">

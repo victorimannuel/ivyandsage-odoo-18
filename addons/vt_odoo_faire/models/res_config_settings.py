@@ -80,9 +80,9 @@ class ResConfigSettings(models.TransientModel):
         
         # Prepare the payload
         payload = {
-            "application_token": self.application_id,
-            "application_secret": self.secret_id,
-            "redirect_url": self.redirect_url,
+            "application_token": self.faire_application_id,
+            "application_secret": self.faire_application_secret_id,
+            "redirect_url": self.faire_api_redirect_url,
             "scope": [scope.name for scope in self.scope_ids],
             "grant_type": "AUTHORIZATION_CODE",
             "authorization_code": self.authorization_code,
@@ -154,6 +154,117 @@ class ResConfigSettings(models.TransientModel):
         local_time = utc_time.astimezone(timezone)
         
         return local_time.strftime('%Y-%m-%d %H:%M:%S')
+    
+    def faire_get_all_products(self):
+        """Get all products."""
+        self.ensure_one()
+        
+        page = 1
+        all_products = []
+        
+        credentials = f'{self.faire_application_id}:{self.faire_application_secret_id}'
+        encoded_credentials = base64.b64encode(credentials.encode("utf-8")).decode("utf-8")
+        
+        headers = {
+            'X-FAIRE-APP-CREDENTIALS': encoded_credentials,
+            'X-FAIRE-OAUTH-ACCESS-TOKEN': self.faire_oauth_access_token
+        }
+        
+        url = "https://www.faire.com/external-api/v2/products"
+        response = requests.get(url, headers=headers)
+        while True:
+            # Fetch products for the current page
+            response = requests.get(f"{url}?page={page}", headers=headers)
+            if response.status_code == 200:
+                products = response.json().get('products')
+                if not products:  # No more orders to fetch
+                    break
+                all_products.extend(products)
+                page += 1  # Move to the next page
+            else:
+                print(f"Error fetching products: {response.status_code}")
+                break
+            
+        for product in all_products:
+            print('\n', product)
+            user_tz = self.env.user.tz
+            product_id = product['id']
+            
+            for variant in product['variants']:
+                product_template = self.env['product.template'].search(
+                    domain=[('faire_variant_id', '=', variant['id'])]
+                )
+                if not product_template:
+                    self.env['product.template'].create({
+                        'faire_product_id': product['id'],
+                        'faire_variant_id': variant['id'],
+                        'name': product['name'],
+                        'description': product['description'],
+                        'image_1920': variant['images'][0]['url'] if variant['images'] else False,
+                        'qty_available': variant['available_quantity'],
+                    })
+                    # self.env['product.product'].create({
+                    #     'faire_variant_id': product[''],
+                    #     'name': product['name'],
+                    #     'description': product['description'],
+                    #     'qty_available': product['description'],
+                    # })
+                
+        #     # Order Lines
+        #     order_line_ids = []
+        #     existing_order_line_ids = []
+        #     if faire_order:
+        #         existing_order_line_ids = {line.faire_order_line_id: line.id for line in faire_order.order_line_ids}
+                
+        #     for item in order['items']:
+        #         line_values = {
+        #             'faire_order_id': item['order_id'],
+        #             'faire_order_line_id': item['id'],
+        #             'created_at': self.convert_to_timezone(user_tz, item['created_at']),
+        #             'updated_at': self.convert_to_timezone(user_tz, item['updated_at']),
+        #             'quantity': item['quantity'],
+        #             'price_cents': item['price_cents'],
+        #             'product_name': item['product_name'],
+        #             'product_variant_name': item['variant_name'],
+        #             'includes_tester': item['includes_tester'],
+        #             'state': item['state'],
+        #         }
+                
+        #         # To determine wether to create or update
+        #         # Append to order_line_ids with the correct command
+        #         if item['id'] in existing_order_line_ids:
+        #             order_line_ids.append((1, existing_order_line_ids[item['id']], line_values))  # Update if exists
+        #         else:
+        #             order_line_ids.append((0, 0, line_values))  # Create if new
+                
+        #     values = {
+        #         'display_id': order['display_id'],
+        #         'created_at': self.convert_to_timezone(user_tz, order['created_at']),
+        #         'updated_at': self.convert_to_timezone(user_tz, order['updated_at']),
+        #         'state': order['state'],
+        #         'customer_name': order['customer'].get('first_name') + ' ' + order['customer'].get('last_name'),
+        #         # 'address': order['address'],
+        #         'ship_after': self.convert_to_timezone(user_tz, order['ship_after']),
+        #         # 'payout_costs': order['payout_costs'],
+        #         'payment_initiated_at': self.convert_to_timezone(user_tz, order['payment_initiated_at']) if order.get('payment_initiated_at') else False,
+        #         'retailer_id': order['retailer_id'],
+        #         'source': order['source'],
+        #         'expected_ship_date': self.convert_to_timezone(user_tz, order['expected_ship_date']) if order.get('expected_ship_date') else False,
+        #         # 'customer': order['customer'],
+        #         'processing_at': self.convert_to_timezone(user_tz, order['processing_at']) if order.get('processing_at') else False,
+        #         'is_free_shipping': order['is_free_shipping'],
+        #         'free_shipping_reason': order['free_shipping_reason'] if order['is_free_shipping'] == True else '',
+        #         # 'faire_covered_shipping_cost': order['faire_covered_shipping_cost'],
+        #         'order_line_ids': order_line_ids,
+        #         # 'shipments': order['shipments'],
+        #         # 'brand_discount': order['brand_discount'],
+        #     }
+            
+        #     if len(faire_order) == 0:
+        #         values.update({'faire_order_id': order_id})
+        #         self.env['faire.order'].create(values)
+        #     else:
+        #         faire_order.write(values)
         
     def faire_get_all_orders(self):
         """Get all orders."""
