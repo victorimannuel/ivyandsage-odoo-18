@@ -2,5 +2,6 @@
 "access_faire_oauth_crud","access_faire_oauth_crud","vt_odoo_faire.model_faire_oauth","base.group_system",1,1,1,1
 "access_faire_oauth_r","access_faire_oauth_r","vt_odoo_faire.model_faire_oauth","",0,0,0,0
 "access_faire_permission_scope_r","access_faire_permission_scope_r","vt_odoo_faire.model_faire_permission_scope","",1,0,0,0
+"access_faire_api_service_crud","access_faire_api_service_crud","vt_odoo_faire.model_faire_api_service","base.group_system",1,1,1,1
 "access_faire_order_crud","access_faire_order_crud","vt_odoo_faire.model_faire_order",,1,1,1,1
 vt_odoo_faire.access_faire_order_line_crud,access_faire_order_line_crud,vt_odoo_faire.model_faire_order_line,,1,1,1,1

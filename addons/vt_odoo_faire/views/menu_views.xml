@@ -12,6 +12,7 @@
             <!-- Faire/Configuration -->
             <menuitem id="faire_configuration_menu_sub" name="Configuration" sequence="40">
                 <!-- Faire/Configuration/OAuth V2 -->
+                <menuitem id="faire_api_service_configuration_menu_sub" name="Faire API Service" sequence="10" action="faire_api_service_action"/>
                 <menuitem id="faire_configuration_oauth_menu" name="OAuth V2" sequence="10" action="faire_oauth_action"/>
             </menuitem>
         </menuitem>

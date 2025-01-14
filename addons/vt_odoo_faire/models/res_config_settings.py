@@ -66,6 +66,7 @@ class ResConfigSettings(models.TransientModel):
         
         
         auth_url = f"https://faire.com/oauth2/authorize?applicationId={application_id}&scope={scope}&state={state}&redirectUrl={redirect_url}"
+        print('auth_url', auth_url)
         
         return {
             'type': 'ir.actions.act_url',

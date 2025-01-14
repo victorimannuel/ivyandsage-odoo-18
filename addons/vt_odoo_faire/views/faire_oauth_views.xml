@@ -29,6 +29,11 @@
                                 <field name="oauth_access_token" widget="password"/>
                                 <field name="token_type" widget="password"/>
                             </group>
+                            <notebook>
+                                <page name="service" string="Service">
+                                    <button name="get_all_orders" string="Get All Orders" class="btn-primary" type="object"/>
+                                </page>
+                            </notebook>
                         </group>
                     </sheet>
                 </form>

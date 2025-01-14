@@ -17,20 +17,16 @@ class FaireAuthController(http.Controller):
         authorization_code = kwargs.get('authorization_code')
         state = kwargs.get('state')
         
-        faire = request.env['faire.oauth'].sudo().search([('active', '=', True), ('state', '=', state)], limit=1)
-        _logger.info("Faire oAuth record: %s", faire)
-        if authorization_code and faire:
-            faire.sudo().write({
-                'authorization_code': authorization_code
-            })
+        if authorization_code:
+            self.env['ir.config_parameter'].set_param('vt_odoo_faire.faire_authorization_code', authorization_code)
             
-            access_token_data = self.get_access_token(faire.application_id, faire.secret_id, faire.redirect_url, faire.scope_ids, authorization_code)
-            if access_token_data:
-                faire.sudo().write({
-                    'oauth_access_token': access_token_data.get('accessToken'),
-                    'token_type': access_token_data.get('tokenType'),
-                    'status': 'active',
-                })
+            # access_token_data = self.get_access_token(faire.application_id, faire.secret_id, faire.redirect_url, faire.scope_ids, authorization_code)
+            # if access_token_data:
+            #     faire.sudo().write({
+            #         'oauth_access_token': access_token_data.get('accessToken'),
+            #         'token_type': access_token_data.get('tokenType'),
+            #         'status': 'active',
+            #     })
                 
         return request.redirect('/faire/oauth2/success')
     

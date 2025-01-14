@@ -20,6 +20,7 @@
         
         'views/res_config_settings_views.xml',
         'views/faire_oauth_views.xml',
+        'views/faire_api_service_views.xml',
         'views/faire_order_views.xml',
         'views/menu_views.xml',
         'views/success_page_template.xml',
