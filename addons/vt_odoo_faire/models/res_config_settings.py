@@ -195,12 +195,19 @@ class ResConfigSettings(models.TransientModel):
                     domain=[('faire_variant_id', '=', variant['id'])]
                 )
                 if not product_template:
+                    if variant['images'] and variant['images'][0]:
+                        product_image_url = variant['images'][0]['url']
+                    elif product['images'] and product['images'][0]:
+                        product_image_url = product['images'][0]['url']
+                    else:
+                        product_image_url = False
+                        
                     self.env['product.template'].create({
                         'faire_product_id': product['id'],
                         'faire_variant_id': variant['id'],
                         'name': product['name'],
                         'description': product['description'],
-                        'faire_product_image_url': variant['images'][0]['url'] if variant['images'] else False,
+                        'faire_product_image_url': product_image_url,
                         'qty_available': variant['available_quantity'] if variant.get('available_quantity') else 0,
                     })
                     # self.env['product.product'].create({
