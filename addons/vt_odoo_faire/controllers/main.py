@@ -18,7 +18,7 @@ class FaireAuthController(http.Controller):
         state = kwargs.get('state')
         
         if authorization_code:
-            self.env['ir.config_parameter'].set_param('vt_odoo_faire.faire_authorization_code', authorization_code)
+            request.env['ir.config_parameter'].set_param('vt_odoo_faire.faire_authorization_code', authorization_code)
             
             # access_token_data = self.get_access_token(faire.application_id, faire.secret_id, faire.redirect_url, faire.scope_ids, authorization_code)
             # if access_token_data:
