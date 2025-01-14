@@ -5,7 +5,7 @@
 	<t t-name="muk_web_appsbar.AppsBar">
 		<div class="mk_apps_sidebar_panel">
 			<div class="mk_apps_sidebar">
-				<div t-if="sidebarImageUrl" class="mk_apps_sidebar_logo p-2">
+				<div t-if="sidebarImageUrl" class="mk_apps_sidebar_logo py-2">
 					<img class="img-fluid mx-auto" t-att-src="sidebarImageUrl" alt="Logo"/>
 				</div>
 				<ul class="mk_apps_sidebar_menu">

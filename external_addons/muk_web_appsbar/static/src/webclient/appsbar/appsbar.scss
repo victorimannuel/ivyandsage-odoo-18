@@ -3,20 +3,29 @@
     background-color: $mk-appbar-background;
     width: var(--mk-sidebar-width, 0);
     overflow-y: auto;
+	border-top: 2px solid #32356D;
+	border-right: 2px solid #32356D;
     .mk_apps_sidebar {
         height: 100%;
         display: flex;
         flex-direction: column;
-        // justify-content: space-between;
+        justify-content: space-between;
 	    white-space: nowrap;
 	    .mk_apps_sidebar_menu {
+			margin-top: 115px;
 	    	padding: 0;
 		    > li > a {
 		        cursor: pointer;
 	            font-size: 15px;
 	            font-weight: 300;
 	            overflow: hidden;
-	            padding: 15px 11px;
+				margin: 0.25rem 0.5rem 0.25rem 0.25rem;
+				// margin-top: 0.25rem;
+				// margin-right: 1rem;
+				// margin-bottom: 0.25rem;
+				// margin-left: 0.25rem;
+				border-radius: 8px;
+	            padding: 10px 11px;
 	            text-decoration: none;
 	            color: $mk-appbar-color;
 	            text-overflow: ellipsis;
@@ -31,10 +40,24 @@
 	        }
 	        > li:hover > a {
 			    background: $mk-appbar-active;
+				transition: all 0.3s;
 	        }
 	    }
 	}
 }
+
+.mk_apps_sidebar_logo {
+	position: fixed;
+	width: var(--mk-sidebar-width, 0);
+	text-align: center;
+    background-color: $mk-appbar-background;
+	border-right: 2px solid #32356D;
+	img {
+		height: 100px;
+		overflow-y: auto;
+	}
+}
+
 
 .mk_sidebar_type_large {
 	--mk-sidebar-width: #{$mk-sidebar-large-width};
