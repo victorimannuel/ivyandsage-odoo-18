@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Discuss -->
+        <record id="mail.menu_root_discuss" model="ir.ui.menu">
+            <field name="sequence">99</field>
+            <field name="active">False</field>
+        </record>
+        <!-- Contacts -->
+        <record id="contacts.menu_contacts" model="ir.ui.menu">
+            <field name="sequence">99</field>
+            <field name="active">False</field>
+        </record>
+        <!-- Sales -->
+        <record id="sale.sale_menu_root" model="ir.ui.menu">
+            <field name="sequence">99</field>
+            <field name="active">False</field>
+            <!-- <field name="active">True</field> -->
+        </record>
+        <!-- Dashboards -->
+        <record id="spreadsheet_dashboard.spreadsheet_dashboard_menu_root" model="ir.ui.menu">
+            <field name="sequence">99</field>
+            <field name="active">False</field>
+        </record>
+        <!-- Invoicing -->
+        <record id="account.menu_finance" model="ir.ui.menu">
+            <field name="sequence">99</field>
+            <field name="active">False</field>
+        </record>
+        <!-- Link Tracker -->
+        <record id="utm.menu_link_tracker_root" model="ir.ui.menu">
+            <field name="sequence">99</field>
+            <field name="active">False</field>
+        </record>
+        <!-- Inventory -->
+        <record id="stock.menu_stock_root" model="ir.ui.menu">
+            <field name="sequence">99</field>
+            <field name="active">False</field>
+            <!-- <field name="active">True</field> -->
+        </record>
+        <!-- Email Marketing -->
+        <record id="mass_mailing.mass_mailing_menu_root" model="ir.ui.menu">
+            <field name="sequence">99</field>
+            <field name="active">False</field>
+        </record>
+        <!-- SMS Marketing -->
+        <record id="mass_mailing_sms.mass_mailing_sms_menu_root" model="ir.ui.menu">
+            <field name="sequence">99</field>
+            <field name="active">False</field>
+        </record>
+        <!-- Live Chat -->
+        <record id="im_livechat.menu_livechat_root" model="ir.ui.menu">
+            <field name="sequence">99</field>
+            <field name="active">False</field>
+        </record>
+        
+        <!-- Home -->
+        <menuitem id="home_menu_root"
+            name="Home"
+            action="spreadsheet_dashboard.ir_actions_dashboard_action"
+            web_icon="spreadsheet_dashboard,static/description/icon.png"
+            sequence="10"/>
+        <!-- Orders -->
+        <menuitem id="order_menu_root"
+            name="Orders"
+            web_icon="sale_management,static/description/icon.png"
+            active="True"
+            sequence="20">
+            <!-- Orders/Invoicing -->
+            <menuitem id="invoicing_menu"
+                name="Invoicing"
+                sequence="10"
+                action="sale.action_quotations_with_onboarding"/>
+                <!-- action="account.action_move_out_invoice_type"/> -->
+            <!-- Orders/Issues -->
+            <menuitem id="issue_menu"
+                name="Issues"
+                sequence="20">
+                <menuitem id="late_shipment_menu"
+                    name="Late Shipments"
+                    sequence="10"
+                    action="orderflow_app.action_late_shipment_list"/>
+                <menuitem id="cancelled_order_menu"
+                    name="Cancelled Orders"
+                    sequence="20"
+                    action="orderflow_app.action_cancelled_order_list"/>
+                <menuitem id="missing_item_menu"
+                    name="Missing Items"
+                    sequence="30"
+                    action="sale.action_quotations_with_onboarding"/>
+                <menuitem id="damaged_item_menu"
+                    name="Damaged Items"
+                    sequence="40"
+                    action="sale.action_quotations_with_onboarding"/>
+            </menuitem>
+            <!-- Orders/Payouts -->
+            <menuitem id="payout_menu"
+                name="Payouts"
+                sequence="30"
+                action="account.action_account_payments"/>
+        </menuitem>
+        <!-- Messages -->
+        <menuitem id="message_menu_root"
+            name="Messages"
+            action="im_livechat.im_livechat_channel_action"
+            web_icon="mail,static/description/icon.png"
+            sequence="30"/>
+        <!-- Products -->
+        <menuitem id="product_menu_root"
+            name="Products"
+            web_icon="stock,static/description/icon.png"
+            action="sale.product_template_action"
+            sequence="40">
+            <!-- <menuitem id="bulk_upload_menu"
+                name="Bulk Upload"
+                action="stock.action_product_stock_view"
+                sequence="10"/> -->
+            <menuitem id="inventory_menu"
+                name="Inventory"
+                action="stock.action_product_stock_view"
+                sequence="20"/>
+            <menuitem id="collection_menu"
+                name="Collections"
+                action="stock.action_product_stock_view"
+                sequence="30"/>
+            <menuitem id="performance_menu"
+                name="Performance"
+                action="stock.action_product_stock_view"
+                sequence="40"/>
+        </menuitem>
+        <!-- Customers -->
+        <menuitem id="customer_menu_root"
+            name="Customers"
+            action="contacts.action_contacts"
+            web_icon="contacts,static/description/icon.png"
+            sequence="50"/>
+        <!-- Marketing -->
+        <menuitem id="marketing_menu_root"
+            name="Marketing"
+            web_icon="mail_bot,static/description/icon.png"
+            action="mass_mailing.action_view_utm_campaigns"
+            sequence="60">
+            <menuitem id="campaign_menu"
+                name="Campaigns"
+                action="mass_mailing.action_view_utm_campaigns"
+                sequence="10"/>
+        </menuitem>
+        <!-- Analytics -->
+        <menuitem id="analytic_menu_root"
+            name="Analytics"
+            action="spreadsheet_dashboard.ir_actions_dashboard_action"
+            web_icon="snailmail,static/description/icon.png"
+            sequence="70"/>
+        <!-- My Shop -->
+        <menuitem id="myshop_menu_root"
+            name="My Shop"
+            action="spreadsheet_dashboard.ir_actions_dashboard_action"
+            web_icon="website_sale,static/description/icon.png"
+            sequence="80"/>
+        <!-- Settings -->
+        <menuitem id="setting_menu_root"
+            name="Settings"
+            action="spreadsheet_dashboard.ir_actions_dashboard_action"
+            web_icon="base,static/description/settings.png"
+            sequence="90"
+            active="False"/>
+    </data>
+</odoo>

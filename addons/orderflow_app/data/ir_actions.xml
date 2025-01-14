@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">
+            <field name="name">Invoicing</field>
+        </record>
+
+        <record id="action_late_shipment_list" model="ir.actions.act_window">
+            <field name="name">Late Shipments</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_mode">list</field>
+            <field name="domain">[('commitment_date', '&lt;=', datetime.date.today())]</field>
+        </record>
+
+        <record id="action_cancelled_order_list" model="ir.actions.act_window">
+            <field name="name">Cancelled Order</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_mode">list</field>
+            <field name="domain">[('state', '=', 'cancel')]</field>
+        </record>
+    </data>
+</odoo>
