@@ -19,13 +19,13 @@ class ProductTemplate(models.Model):
             except Exception:
                 self.image_1920 = False
             
-    @api.model_create_multi
-    def create(self, vals_list):
-        for vals in vals_list:
-            print(vals)
-            if 'faire_product_image_url' in vals:
-                self._process_faire_product_image_url(vals['faire_product_image_url'])
-        return super().create(vals_list)
+    # @api.model_create_multi
+    # def create(self, vals_list):
+    #     for vals in vals_list:
+    #         print(vals)
+    #         if 'faire_product_image_url' in vals:
+    #             self._process_faire_product_image_url(vals['faire_product_image_url'])
+    #     return super().create(vals_list)
     
     def write(self, vals):
         if 'faire_product_image_url' in vals:
