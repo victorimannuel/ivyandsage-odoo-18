@@ -9,6 +9,8 @@ class ProductTemplate(models.Model):
     faire_product_id = fields.Char(string='Faire Product ID')
     faire_variant_id = fields.Char(string='Faire Variant ID')
     faire_product_image_url = fields.Char(string='Faire Product Image URL')
+    retail_price = fields.Float(string='Retail Price')
+    wholesale_price = fields.Float(string='Wholesale Price')
     
     def _process_faire_product_image_url(self, url):
         if url:

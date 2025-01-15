@@ -209,6 +209,8 @@ class ResConfigSettings(models.TransientModel):
                         'description': product['description'],
                         'faire_product_image_url': product_image_url,
                         'qty_available': variant['available_quantity'] if variant.get('available_quantity') else 0,
+                        'wholesale_price': variant['prices'][0]['wholesale_price']['amount_minor'] if variant.get('prices') else 0,
+                        'retail_price': variant['prices'][0]['wholesale_price']['amount_minor'] if variant.get('prices') else 0,
                     })
                     # self.env['product.product'].create({
                     #     'faire_variant_id': product[''],
