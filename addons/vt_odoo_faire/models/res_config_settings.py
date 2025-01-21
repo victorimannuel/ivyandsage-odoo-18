@@ -155,6 +155,10 @@ class ResConfigSettings(models.TransientModel):
         
         return local_time.strftime('%Y-%m-%d %H:%M:%S')
     
+    def convert_cents_to_dollars(self, cents):
+        return cents / 100
+        
+    
     def faire_get_all_products(self):
         """Get all products."""
         self.ensure_one()
@@ -241,8 +245,8 @@ class ResConfigSettings(models.TransientModel):
                     'description_ecommerce': product['description'],
                     'is_published': True,
                     'public_categ_ids': ecommerce_category.ids,
-                    'wholesale_price': source_variant['wholesale_price_cents'] or 0,
-                    'retail_price': source_variant['retail_price_cents'] or 0,
+                    'wholesale_price': self.convert_cents_to_dollars(source_variant['wholesale_price_cents'] or 0),
+                    'retail_price': self.convert_cents_to_dollars(source_variant['retail_price_cents'] or 0),
                 })
                 
                 # Creating new product variants through product.template.attribute.line model
@@ -269,8 +273,8 @@ class ResConfigSettings(models.TransientModel):
                                 'qty_available': source_variant['available_quantity'] if source_variant.get('available_quantity') else 0,
                                 # 'wholesale_price': variant['prices'][0]['wholesale_price']['amount_minor'] if variant.get('prices') else 0,
                                 # 'retail_price': variant['prices'][0]['wholesale_price']['amount_minor'] if variant.get('prices') else 0,
-                                'wholesale_price': source_variant['wholesale_price_cents'] or 0,
-                                'retail_price': source_variant['retail_price_cents'] or 0,
+                                'wholesale_price': self.convert_cents_to_dollars(source_variant['wholesale_price_cents'] or 0),
+                                'retail_price': self.convert_cents_to_dollars(source_variant['retail_price_cents'] or 0),
                             })
                     
                     # Creating new pricelist item
