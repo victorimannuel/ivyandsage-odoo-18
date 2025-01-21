@@ -241,6 +241,8 @@ class ResConfigSettings(models.TransientModel):
                     'description_ecommerce': product['description'],
                     'is_published': True,
                     'public_categ_ids': ecommerce_category.ids,
+                    'wholesale_price': source_variant['wholesale_price_cents'] or 0,
+                    'retail_price': source_variant['retail_price_cents'] or 0,
                 })
                 
                 # Creating new product variants through product.template.attribute.line model
