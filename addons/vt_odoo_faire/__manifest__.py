@@ -24,6 +24,7 @@
         'views/faire_api_service_views.xml',
         'views/faire_order_views.xml',
         'views/product_template_views.xml',
+        'views/product_product_views.xml',
         
         'views/menu_views.xml',
         'views/success_page_template.xml',

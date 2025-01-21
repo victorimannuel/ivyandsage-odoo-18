@@ -8,6 +8,7 @@
     'category': 'Sale',
     'version': '18.0',
     'depends': [
+        # Default odoo module
         'sale_management',
         'stock',
         'account',
@@ -19,6 +20,14 @@
         'mass_mailing_sms',
         'im_livechat',
         'spreadsheet_dashboard',
+        'website_sale',
+        
+        # Custom module
+        'vt_odoo_faire',
+        'muk_web_theme',
+        'web_chatter_position_cr',
+        'web_window_title',
+        
     ],
     'demo': [
     ],
@@ -30,6 +39,10 @@
     'images': [
     ],
     'assets': {
+        'web.assets_backend': [
+            'orderflow_app/static/src/product_configurator_dialog.js',
+            # 'orderflow_app/static/src/product.xml',
+        ],
     },
     'installable': True,
     'auto_install': False,

@@ -5,3 +5,4 @@ from . import faire_api_service
 from . import faire_order
 from . import faire_order_line
 from . import product_template
+from . import product_product

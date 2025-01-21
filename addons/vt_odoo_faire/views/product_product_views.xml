@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="product_normal_form_view" model="ir.ui.view">
+            <field name="name">product.product.view.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <field name="invoice_policy" position="before">
+                    <field name="faire_product_image_url"/>
+                </field>
+                <xpath expr="//label[@for='lst_price']" position="before">
+                    <field name="min_qty" widget="integer"/>
+                    <field name="retail_price"/>
+                    <field name="wholesale_price"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_kanban_view" model="ir.ui.view">
+            <field name="name">product.product.view.kanban</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_kanban_view"/>
+            <field name="arch" type="xml">
+                <!-- <xpath expr="//header" position="inside">
+                    <button string="Process Image URL" type="object" name="_process_faire_product_image_url"/>
+                </xpath> -->
+                <xpath expr="//field[@name='lst_price']/.." position="after">
+                    <span>
+                        Retail price: <field name="retail_price"/>
+                    </span>
+                    <span>
+                        Wholesale price: <field name="wholesale_price"/>
+                    </span>
+                </xpath>
+                <xpath expr="//field[@name='lst_price']/.." position="attributes">
+                    <attribute name="style">display: none;</attribute>
+                </xpath>
+                <field name="lst_price" position="after">
+                    <field name="retail_price"/>
+                    <field name="wholesale_price"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="action_process_image_url" model="ir.actions.server">
+            <field name="name">Process Image URL</field>
+            <field name="model_id" ref="product.model_product_product"/>
+            <field name="binding_model_id" ref="product.model_product_product"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    action = records._process_faire_product_image_url()
+            </field>
+        </record>
+    </data>
+</odoo>

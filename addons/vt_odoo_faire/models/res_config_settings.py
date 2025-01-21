@@ -46,12 +46,12 @@ class ResConfigSettings(models.TransientModel):
     faire_authorization_code = fields.Char(
         string='Faire Authorization Code',
         config_parameter='vt_odoo_faire.faire_authorization_code',
-        readonly=True
+        readonly=False
     )
     faire_oauth_access_token = fields.Char(
         string="Faire OAuth Access Token",
         config_parameter='vt_odoo_faire.faire_oauth_access_token',
-        readonly=True
+        readonly=False
     )
     
     def faire_authorize(self):
@@ -184,97 +184,135 @@ class ResConfigSettings(models.TransientModel):
             else:
                 print(f"Error fetching products: {response.status_code}")
                 break
-            
-        for product in all_products:
-            print('\n', product)
-            user_tz = self.env.user.tz
-            product_id = product['id']
-            
-            for variant in product['variants']:
-                product_template = self.env['product.template'].search(
-                    domain=[('faire_variant_id', '=', variant['id'])]
-                )
-                if not product_template:
-                    if variant['images'] and variant['images'][0]:
-                        product_image_url = variant['images'][0]['url']
-                    elif product['images'] and product['images'][0]:
-                        product_image_url = product['images'][0]['url']
-                    else:
-                        product_image_url = False
-                        
-                    self.env['product.template'].create({
-                        'faire_product_id': product['id'],
-                        'faire_variant_id': variant['id'],
-                        'name': product['name'],
-                        'description': product['description'],
-                        'faire_product_image_url': product_image_url,
-                        'qty_available': variant['available_quantity'] if variant.get('available_quantity') else 0,
-                        'wholesale_price': variant['prices'][0]['wholesale_price']['amount_minor'] if variant.get('prices') else 0,
-                        'retail_price': variant['prices'][0]['wholesale_price']['amount_minor'] if variant.get('prices') else 0,
-                    })
-                    # self.env['product.product'].create({
-                    #     'faire_variant_id': product[''],
-                    #     'name': product['name'],
-                    #     'description': product['description'],
-                    #     'qty_available': product['description'],
-                    # })
-                
-        #     # Order Lines
-        #     order_line_ids = []
-        #     existing_order_line_ids = []
-        #     if faire_order:
-        #         existing_order_line_ids = {line.faire_order_line_id: line.id for line in faire_order.order_line_ids}
-                
-        #     for item in order['items']:
-        #         line_values = {
-        #             'faire_order_id': item['order_id'],
-        #             'faire_order_line_id': item['id'],
-        #             'created_at': self.convert_to_timezone(user_tz, item['created_at']),
-        #             'updated_at': self.convert_to_timezone(user_tz, item['updated_at']),
-        #             'quantity': item['quantity'],
-        #             'price_cents': item['price_cents'],
-        #             'product_name': item['product_name'],
-        #             'product_variant_name': item['variant_name'],
-        #             'includes_tester': item['includes_tester'],
-        #             'state': item['state'],
-        #         }
-                
-        #         # To determine wether to create or update
-        #         # Append to order_line_ids with the correct command
-        #         if item['id'] in existing_order_line_ids:
-        #             order_line_ids.append((1, existing_order_line_ids[item['id']], line_values))  # Update if exists
-        #         else:
-        #             order_line_ids.append((0, 0, line_values))  # Create if new
-                
-        #     values = {
-        #         'display_id': order['display_id'],
-        #         'created_at': self.convert_to_timezone(user_tz, order['created_at']),
-        #         'updated_at': self.convert_to_timezone(user_tz, order['updated_at']),
-        #         'state': order['state'],
-        #         'customer_name': order['customer'].get('first_name') + ' ' + order['customer'].get('last_name'),
-        #         # 'address': order['address'],
-        #         'ship_after': self.convert_to_timezone(user_tz, order['ship_after']),
-        #         # 'payout_costs': order['payout_costs'],
-        #         'payment_initiated_at': self.convert_to_timezone(user_tz, order['payment_initiated_at']) if order.get('payment_initiated_at') else False,
-        #         'retailer_id': order['retailer_id'],
-        #         'source': order['source'],
-        #         'expected_ship_date': self.convert_to_timezone(user_tz, order['expected_ship_date']) if order.get('expected_ship_date') else False,
-        #         # 'customer': order['customer'],
-        #         'processing_at': self.convert_to_timezone(user_tz, order['processing_at']) if order.get('processing_at') else False,
-        #         'is_free_shipping': order['is_free_shipping'],
-        #         'free_shipping_reason': order['free_shipping_reason'] if order['is_free_shipping'] == True else '',
-        #         # 'faire_covered_shipping_cost': order['faire_covered_shipping_cost'],
-        #         'order_line_ids': order_line_ids,
-        #         # 'shipments': order['shipments'],
-        #         # 'brand_discount': order['brand_discount'],
-        #     }
-            
-        #     if len(faire_order) == 0:
-        #         values.update({'faire_order_id': order_id})
-        #         self.env['faire.order'].create(values)
-        #     else:
-        #         faire_order.write(values)
         
+        # Creating a wholesale pricelist
+        # wholesale_pricelist = self.env['product.pricelist'].create({
+        #     'name': 'Wholesale Pricelist',
+        # })
+        
+        # Updating default pricelist
+        default_pricelist = self.env['product.pricelist'].search([('name', 'ilike', 'Default')], limit=1)
+        website = self.env['website'].search([], limit=1)
+        default_pricelist.website_id = website.id
+        # NOTES: Make sure the website in the pricelist ecommerce tab is not empty,
+        # otherwise the price in ecommerce (frontend) won't be using this wholesale pricelist
+        
+        # Creating product categories from Faire's taxonomies
+        self.get_and_create_ecommerce_categories(headers)
+        
+        for product in all_products:
+            # TODO: Currently only able to create new, not editing the existing
+            product_template = self.env['product.template'].search(
+                domain=[('faire_product_id', '=', product['id'])]
+            )
+            if not product_template:
+                # Updating product variants value
+                variants = []
+                for option in product['variant_option_sets']:
+                    variants.append({
+                        'attribute': self.env['product.attribute'].search([('name', '=', option['name'])])
+                    })
+                for source_variant in product['variants']:
+                    for variant in variants:
+                        for option in source_variant['options']:
+                            if option['name'] == variant['attribute'].name:
+                                attribute = self.env['product.attribute'].search([('name', '=', option['name'])])
+                                value = self.env['product.attribute.value'].search([
+                                    ('attribute_id', '=', attribute.id),
+                                    ('name', '=', option['value']),
+                                ])
+                                print(variant.get('values'))
+                                variant.update({
+                                    'values': value + variant['values'] if 'values' in variant else value,
+                                    'price_extra': source_variant['wholesale_price_cents']
+                                })
+                
+                # Creating new product template
+                ecommerce_category = self.env['product.public.category'].search([('name', '=', product['taxonomy_type']['name'])])
+                product_template = self.env['product.template'].create({
+                    'faire_product_id': product['id'],
+                    'name': product['name'],
+                    'description': product['description'],
+                    'faire_product_image_data': product['images'],
+                    'min_qty': product['minimum_order_quantity'] or 0,
+                    'description_ecommerce': product['description'],
+                    'is_published': True,
+                    'public_categ_ids': ecommerce_category.ids,
+                })
+                
+                # Creating new product variants through product.template.attribute.line model
+                for variant in variants:
+                    self.env['product.template.attribute.line'].create({
+                        'product_tmpl_id': product_template.id,
+                        'attribute_id': variant['attribute'].id,
+                        'value_ids': variant['values'].ids,
+                    })
+                
+                # Updating product variants value
+                related_products = self.env['product.product'].search([
+                    ('product_tmpl_id', '=', product_template.id),
+                ])
+                for related_product in related_products:
+                    for source_variant in product['variants']:
+                        if related_product.display_name.__contains__(source_variant['name']) or source_variant['name'] == 'default':
+                            related_product.write({
+                                'faire_product_id': product['id'],
+                                'faire_variant_id': source_variant['id'],
+                                'name': product['name'],
+                                'description': product['description'],
+                                'faire_product_image_data': source_variant['images'] if source_variant.get('images') else product['images'],
+                                'qty_available': source_variant['available_quantity'] if source_variant.get('available_quantity') else 0,
+                                # 'wholesale_price': variant['prices'][0]['wholesale_price']['amount_minor'] if variant.get('prices') else 0,
+                                # 'retail_price': variant['prices'][0]['wholesale_price']['amount_minor'] if variant.get('prices') else 0,
+                                'wholesale_price': source_variant['wholesale_price_cents'] or 0,
+                                'retail_price': source_variant['retail_price_cents'] or 0,
+                            })
+                    
+                    # Creating new pricelist item
+                    self.env['product.pricelist.item'].create({
+                        'display_applied_on': '1_product',
+                        'product_tmpl_id': product_template.id,
+                        'product_id': related_product.id,
+                        'compute_price': 'fixed',
+                        'fixed_price': related_product.wholesale_price,
+                        'min_quantity': related_product.min_qty or 0,
+                    })
+                    
+        self.get_and_create_variant_options(all_products)
+        
+    def get_and_create_variant_options(self, products):
+        variant_option_list = []
+        for product in products:
+            for option in product['variant_option_sets']:
+                if option['name'] not in [option['name'] for option in variant_option_list]:
+                    variant_option_list.append(option)
+                else:
+                    for target_option in variant_option_list:
+                        if target_option['name'] == option['name']:
+                            for value in option['values']:
+                                if value not in target_option['values']:
+                                    target_option['values'].append(value)
+                                    target_option['values'] = sorted(target_option['values'])
+        
+        product_attributes = self.env['product.attribute'].search([])
+        for option in variant_option_list:
+            if option['name'] not in [attribute.name for attribute in product_attributes]:
+                self.env['product.attribute'].create({
+                    'name': option['name'],
+                    'display_type': 'pills',
+                    'value_ids': [(0, 0, {'name': value}) for value in option['values']]
+                })
+    
+    def get_and_create_ecommerce_categories(self, headers):
+        url = "https://www.faire.com/external-api/v2/products/types"
+        taxonomies = requests.get(url, headers=headers)
+        for taxonomy in taxonomies.json().get('taxonomy_types'):
+            self.env['product.public.category'].create({
+                # TODO: Create faire_id field if necessary
+                # 'faire_id': taxonomy['id'],
+                'name': taxonomy['name']
+            })
+    
     def faire_get_all_orders(self):
         """Get all orders."""
         self.ensure_one()

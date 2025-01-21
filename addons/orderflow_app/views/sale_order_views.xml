@@ -9,6 +9,12 @@
                 <xpath expr="//field[@name='date_order']" position="after">
                     <field name="commitment_date"/>
                 </xpath>
+                <xpath expr="//field[@name='order_line']/list/field[@name='price_unit']" position="after">
+                    <field name="retail_price"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/list/field[@name='price_unit']" position="attributes">
+                    <attribute name="string">Wholesale Price</attribute>
+                </xpath>
             </field>
         </record>
         <record id="sale_order_tree" model="ir.ui.view">
