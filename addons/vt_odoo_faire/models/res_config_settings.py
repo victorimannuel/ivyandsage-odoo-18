@@ -270,6 +270,7 @@ class ResConfigSettings(models.TransientModel):
                     
                     # Creating new pricelist item
                     self.env['product.pricelist.item'].create({
+                        'pricelist_id': default_pricelist.id,
                         'display_applied_on': '1_product',
                         'product_tmpl_id': product_template.id,
                         'product_id': related_product.id,
