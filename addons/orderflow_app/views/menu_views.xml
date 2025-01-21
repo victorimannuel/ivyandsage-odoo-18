@@ -109,8 +109,24 @@
         <menuitem id="product_menu_root"
             name="Products"
             web_icon="stock,static/description/icon.png"
-            action="sale.product_template_action"
+            action="product.product_template_action_all"
             sequence="40">
+            <menuitem id="product_menu"
+                name="Products"
+                sequence="20">
+                <menuitem id="product_template_menu"
+                    name="Products"
+                    action="product.product_template_action_all"
+                    sequence="10"/>
+                <menuitem id="product_product_menu"
+                    name="Product Variants"
+                    action="product.product_normal_action"
+                    sequence="20"/>
+                <menuitem id="product_pricelist_menu"
+                    name="Pricelists"
+                    action="product.product_pricelist_item_action"
+                    sequence="30"/>
+            </menuitem>
             <!-- <menuitem id="bulk_upload_menu"
                 name="Bulk Upload"
                 action="stock.action_product_stock_view"
@@ -118,15 +134,15 @@
             <menuitem id="inventory_menu"
                 name="Inventory"
                 action="stock.action_product_stock_view"
-                sequence="20"/>
+                sequence="30"/>
             <menuitem id="collection_menu"
                 name="Collections"
                 action="stock.action_product_stock_view"
-                sequence="30"/>
+                sequence="40"/>
             <menuitem id="performance_menu"
                 name="Performance"
                 action="stock.action_product_stock_view"
-                sequence="40"/>
+                sequence="50"/>
         </menuitem>
         <!-- Customers -->
         <menuitem id="customer_menu_root"
