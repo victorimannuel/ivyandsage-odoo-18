@@ -200,6 +200,9 @@ class ResConfigSettings(models.TransientModel):
         # Creating product categories from Faire's taxonomies
         self.get_and_create_ecommerce_categories(headers)
         
+        # Create product attributes
+        self.get_and_create_variant_options(all_products)
+        
         for product in all_products:
             # TODO: Currently only able to create new, not editing the existing
             product_template = self.env['product.template'].search(
@@ -279,7 +282,7 @@ class ResConfigSettings(models.TransientModel):
                         'min_quantity': related_product.min_qty or 0,
                     })
                     
-        self.get_and_create_variant_options(all_products)
+        
         
     def get_and_create_variant_options(self, products):
         variant_option_list = []
