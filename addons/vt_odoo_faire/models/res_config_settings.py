@@ -244,6 +244,7 @@ class ResConfigSettings(models.TransientModel):
                     'min_qty': product['minimum_order_quantity'] or 0,
                     'description_ecommerce': product['description'],
                     'is_published': True,
+                    'available_in_pos': True,
                     'public_categ_ids': ecommerce_category.ids,
                     'wholesale_price': self.convert_cents_to_dollars(source_variant['wholesale_price_cents'] or 0),
                     'retail_price': self.convert_cents_to_dollars(source_variant['retail_price_cents'] or 0),

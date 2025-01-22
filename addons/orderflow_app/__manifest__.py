@@ -21,6 +21,7 @@
         'im_livechat',
         'spreadsheet_dashboard',
         'website_sale',
+        'point_of_sale',
         
         # Custom module
         'vt_odoo_faire',
