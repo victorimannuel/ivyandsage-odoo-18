@@ -14,8 +14,8 @@
         <!-- Sales -->
         <record id="sale.sale_menu_root" model="ir.ui.menu">
             <field name="sequence">99</field>
-            <!-- <field name="active">False</field> -->
-            <field name="active">True</field>
+            <field name="active">False</field>
+            <!-- <field name="active">True</field> -->
         </record>
         <!-- Dashboards -->
         <record id="spreadsheet_dashboard.spreadsheet_dashboard_menu_root" model="ir.ui.menu">
@@ -35,8 +35,8 @@
         <!-- Inventory -->
         <record id="stock.menu_stock_root" model="ir.ui.menu">
             <field name="sequence">99</field>
-            <!-- <field name="active">False</field> -->
-            <field name="active">True</field>
+            <field name="active">False</field>
+            <!-- <field name="active">True</field> -->
         </record>
         <!-- Email Marketing -->
         <record id="mass_mailing.mass_mailing_menu_root" model="ir.ui.menu">
@@ -124,8 +124,12 @@
                     sequence="20"/>
                 <menuitem id="product_pricelist_menu"
                     name="Pricelists"
-                    action="product.product_pricelist_item_action"
+                    action="product.product_pricelist_action2"
                     sequence="30"/>
+                <menuitem id="product_pricelist_item_menu"
+                    name="Pricelist Items"
+                    action="product.product_pricelist_item_action"
+                    sequence="40"/>
             </menuitem>
             <!-- <menuitem id="bulk_upload_menu"
                 name="Bulk Upload"
