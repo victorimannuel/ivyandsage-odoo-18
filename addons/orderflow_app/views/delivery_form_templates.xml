@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="scheduled_delivery_method" inherit_id="website_sale.delivery_method">
+        <xpath expr="//t[@t-set='is_pickup_needed']" position="after">
+            <t t-set="is_scheduled_delivery" t-value="dm.delivery_type == 'base_on_rule'" />
+        </xpath>
+        <xpath expr="//div[@t-if='is_pickup_needed']" position="after">
+            <div t-if="dm.delivery_type == 'base_on_rule'" t-attf-class="position-relative d-flex gap-2 mt-2 {{'' if is_selected else 'd-none'}}" >
+                <div class="form-group">
+                    <label for="scheduled_delivery_date">Select Delivery Date:</label>
+                    <input type="date" id="scheduled_delivery_date" name="scheduled_delivery_date" class="form-control" required="1"/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>
