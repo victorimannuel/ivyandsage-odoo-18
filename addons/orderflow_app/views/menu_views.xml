@@ -66,16 +66,31 @@
             web_icon="sale_management,static/description/icon.png"
             active="True"
             sequence="20">
+            <!-- Orders/Orders -->
+            <menuitem id="orders_menu"
+                name="Orders"
+                sequence="10"
+                action="sale.action_quotations_with_onboarding">
+            </menuitem>
             <!-- Orders/Invoicing -->
             <menuitem id="invoicing_menu"
                 name="Invoicing"
-                sequence="10"
-                action="sale.action_quotations_with_onboarding"/>
-                <!-- action="account.action_move_out_invoice_type"/> -->
+                sequence="20">
+                <!-- Orders/Invoicing/Invoices -->
+                <menuitem id="invoice_menu"
+                    name="Invoices"
+                    sequence="10"
+                    action="account.action_move_out_invoice_type"/>
+                <!-- Orders/Invoicing/Credit Notes -->
+                <menuitem id="credit_note_menu"
+                    name="Credit Notes"
+                    sequence="20"
+                    action="account.action_move_out_refund_type"/>
+            </menuitem>
             <!-- Orders/Issues -->
             <menuitem id="issue_menu"
                 name="Issues"
-                sequence="20">
+                sequence="30">
                 <menuitem id="late_shipment_menu"
                     name="Late Shipments"
                     sequence="10"
@@ -87,16 +102,18 @@
                 <menuitem id="missing_item_menu"
                     name="Missing Items"
                     sequence="30"
-                    action="sale.action_quotations_with_onboarding"/>
+                    action="sale.action_quotations_with_onboarding"
+                    active="False"/>
                 <menuitem id="damaged_item_menu"
                     name="Damaged Items"
                     sequence="40"
-                    action="sale.action_quotations_with_onboarding"/>
+                    action="sale.action_quotations_with_onboarding"
+                    active="False"/>
             </menuitem>
             <!-- Orders/Payouts -->
             <menuitem id="payout_menu"
                 name="Payouts"
-                sequence="30"
+                sequence="40"
                 action="account.action_account_payments"/>
         </menuitem>
         <!-- Messages -->

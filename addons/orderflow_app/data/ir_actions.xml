@@ -2,7 +2,7 @@
 <odoo>
     <data>
         <record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">
-            <field name="name">Invoicing</field>
+            <field name="name">Orders</field>
         </record>
 
         <record id="action_late_shipment_list" model="ir.actions.act_window">
