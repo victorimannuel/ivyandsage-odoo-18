@@ -38,6 +38,7 @@
         'views/sale_order_views.xml',
         'views/product_pricelist_views.xml',
         'views/delivery_form_templates.xml',
+        'views/mail_templates_email_layouts.xml',
         
         'data/ir_actions.xml',
         'views/menu_views.xml',
