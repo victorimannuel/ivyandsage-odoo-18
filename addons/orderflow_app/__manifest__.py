@@ -9,6 +9,7 @@
     'version': '18.0',
     'depends': [
         # Default odoo module
+        'base',
         'sale_management',
         'sale',
         'stock',
