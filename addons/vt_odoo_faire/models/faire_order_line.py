@@ -14,6 +14,7 @@ class FaireOrderLine(models.Model):
     # product_variant_id = fields.Many2one(comodel_name='faire.product.variant')
     quantity = fields.Integer(string='Quantity')
     price_cents = fields.Float(string='Price Cents')
+    amount_subtotal = fields.Float(string='Subtotal Amount')
     # product_name = fields.Many2one(comodel_name='faire.product', related='product_id.name')
     # product_variant_name = fields.Many2one(comodel_name='faire.product.variant', related='product_variant_id.name')
     product_name = fields.Char(string='Product Name')

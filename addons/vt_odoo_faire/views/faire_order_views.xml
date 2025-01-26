@@ -35,6 +35,7 @@
                                         <field name="includes_tester"/>
                                         <field name="quantity"/>
                                         <field name="price_cents"/>
+                                        <field name="amount_subtotal"/>
                                         <field name="state"/>
                                     </list>
                                 </field>

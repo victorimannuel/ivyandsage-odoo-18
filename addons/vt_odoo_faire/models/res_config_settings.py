@@ -375,13 +375,14 @@ class ResConfigSettings(models.TransientModel):
                     'created_at': self.convert_to_timezone(user_tz, item['created_at']),
                     'updated_at': self.convert_to_timezone(user_tz, item['updated_at']),
                     'quantity': item['quantity'],
-                    'price_cents': item['price_cents'],
+                    'price_cents': self.convert_cents_to_dollars(item['price_cents'] or 0),
                     'product_name': item['product_name'],
                     'product_variant_name': item['variant_name'],
                     'includes_tester': item['includes_tester'],
                     'state': item['state'],
+                    'amount_subtotal': self.convert_cents_to_dollars(item['price_cents'] or 0) * item['quantity'],
                 }
-                amount_total += item['price_cents']
+                amount_total += line_values['amount_subtotal']
                 
                 # To determine wether to create or update
                 # Append to order_line_ids with the correct command
