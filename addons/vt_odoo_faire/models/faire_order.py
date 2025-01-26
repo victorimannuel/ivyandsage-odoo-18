@@ -71,6 +71,7 @@ class FaireOrder(models.Model):
     # brand_discounts = 
     
     order_line_ids = fields.One2many(comodel_name='faire.order.line', inverse_name='order_id')
+    amount_total = fields.Float('Amount Total')
     
 
 

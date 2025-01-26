@@ -367,6 +367,7 @@ class ResConfigSettings(models.TransientModel):
             if faire_order:
                 existing_order_line_ids = {line.faire_order_line_id: line.id for line in faire_order.order_line_ids}
                 
+            amount_total = 0
             for item in order['items']:
                 line_values = {
                     'faire_order_id': item['order_id'],
@@ -380,6 +381,7 @@ class ResConfigSettings(models.TransientModel):
                     'includes_tester': item['includes_tester'],
                     'state': item['state'],
                 }
+                amount_total += item['price_cents']
                 
                 # To determine wether to create or update
                 # Append to order_line_ids with the correct command
@@ -409,6 +411,7 @@ class ResConfigSettings(models.TransientModel):
                 'order_line_ids': order_line_ids,
                 # 'shipments': order['shipments'],
                 # 'brand_discount': order['brand_discount'],
+                'amount_total': amount_total,
             }
             
             if len(faire_order) == 0:
