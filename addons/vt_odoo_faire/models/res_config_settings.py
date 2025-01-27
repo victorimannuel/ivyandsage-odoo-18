@@ -59,11 +59,10 @@ class ResConfigSettings(models.TransientModel):
         
         # Prepare data
         application_id = self.faire_application_id
-        scope = self.faire_api_permission_scope
+        scope = self.faire_api_permission_scope.replace(',', '%20')
         state = generate_random_state()
         self.env['ir.config_parameter'].set_param('vt_odoo_faire.faire_api_state_code', state)
         redirect_url = self.faire_api_redirect_url
-        
         
         auth_url = f"https://faire.com/oauth2/authorize?applicationId={application_id}&scope={scope}&state={state}&redirectUrl={redirect_url}"
         print('auth_url', auth_url)
@@ -83,9 +82,9 @@ class ResConfigSettings(models.TransientModel):
             "application_token": self.faire_application_id,
             "application_secret": self.faire_application_secret_id,
             "redirect_url": self.faire_api_redirect_url,
-            "scope": [scope.name for scope in self.scope_ids],
+            "scope": self.faire_api_permission_scope.split(","),
             "grant_type": "AUTHORIZATION_CODE",
-            "authorization_code": self.authorization_code,
+            "authorization_code": self.faire_authorization_code,
         }
         
         _logger.info("Access token payload: %s", payload)
