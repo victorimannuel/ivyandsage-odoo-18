@@ -325,8 +325,14 @@ class ResConfigSettings(models.TransientModel):
     def faire_get_all_orders(self):
         """Get all orders."""
         # self.ensure_one()
+        
+        # These conditions are for cron jobs
         if not self:
+            # Search for existing res.config.settings record
             self = self.env['res.config.settings'].sudo().search([], limit=1, order='id desc')
+        if not self:
+            # Create new res.config.settings record
+            self = self.env['res.config.settings'].create({})
         
         page = 1
         all_orders = []
