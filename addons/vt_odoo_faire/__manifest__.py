@@ -17,6 +17,7 @@
     ],
     'data': [
         'data/data_faire_permission_scope.xml',
+        'data/ir_cron.xml',
         'security/ir.model.access.csv',
         
         'views/res_config_settings_views.xml',

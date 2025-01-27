@@ -289,8 +289,6 @@ class ResConfigSettings(models.TransientModel):
                         'min_quantity': related_product.min_qty or 0,
                     })
                     
-        
-        
     def get_and_create_variant_options(self, products):
         variant_option_list = []
         for product in products:
@@ -326,7 +324,9 @@ class ResConfigSettings(models.TransientModel):
     
     def faire_get_all_orders(self):
         """Get all orders."""
-        self.ensure_one()
+        # self.ensure_one()
+        if not self:
+            self = self.env['res.config.settings'].sudo().search([], limit=1, order='id desc')
         
         page = 1
         all_orders = []
@@ -355,7 +355,7 @@ class ResConfigSettings(models.TransientModel):
                 break
             
         for order in all_orders:
-            user_tz = self.env.user.tz
+            user_tz = self.env.user.tz or 'UTC'
             order_id = order['id']
             
             faire_order = self.env['faire.order'].search(
