@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.vt.odoo.square</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <app string="Square" data-string="Square" name="vt_odoo_square">
+                        <block title="API Service" name="fiscal_localization_setting_container" invisible="not is_root_company">
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label string="Environment" for="square_environment" class="col-lg-3 o_light_label"/>
+                                    <field name="square_environment"/>
+                                </div>
+                                <separator/>
+                                <div class="row mt16">
+                                    <label string="Application ID" for="square_application_id" class="col-lg-3 o_light_label"/>
+                                    <field name="square_application_id" placeholder="Application ID"/>
+                                </div>
+                                <div class="row mt16">
+                                    <label string="Access Token" for="square_access_token" class="col-lg-3 o_light_label"/>
+                                    <field name="square_access_token" password="True" placeholder="Access Token"/>
+                                </div>
+                                <div class="row mt16">
+                                    <label string="Location ID" for="square_location_id" class="col-lg-3 o_light_label"/>
+                                    <field name="square_location_id"/>
+                                </div>
+                                <separator/>
+                                <div class="row mt16">
+                                    <label string="Sandbox Application ID" for="square_application_id_sandbox" class="col-lg-3 o_light_label"/>
+                                    <field name="square_application_id_sandbox" placeholder="Sandbox Application ID"/>
+                                </div>
+                                <div class="row mt16">
+                                    <label string="Sandbox Access Token" for="square_access_token_sandbox" class="col-lg-3 o_light_label"/>
+                                    <field name="square_access_token_sandbox" placeholder="Sandbox Access Token"/>
+                                </div>
+                                <div class="row mt16">
+                                    <label string="Sandbox Location ID" for="square_location_id_sandbox" class="col-lg-3 o_light_label"/>
+                                    <field name="square_location_id_sandbox"/>
+                                </div>
+                            </div>
+                        </block>
+                    </app>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

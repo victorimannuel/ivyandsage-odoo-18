@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="square_card_view_template" name="Square Card View">
+        <html>
+            <head>
+                <link href="/vt_odoo_square/static/src/css/app.css" rel="stylesheet" />
+                <script type="text/javascript" src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+                <script type="text/javascript" src="/vt_odoo_square/static/src/js/app.js"></script>
+            </head>
+            <body>
+                <form id="payment-form">
+                    <div id="card-container"></div>
+                    <button id="card-button" type="button">Tokenize</button>
+                </form>
+                <span id="payment-status-text"/>
+                <div id="payment-status-container">
+                </div>
+            </body>
+        </html>
+    </template>
+</odoo>

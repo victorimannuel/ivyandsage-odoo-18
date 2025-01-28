@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_order_form" model="ir.ui.view">
+            <field name="name">sale.order.view.form.ias.sale</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='other_information']" position="before">
+                    <page name='square_information' string='Square Information'>
+                        <group>
+                            <group>
+                                <button name="tokenize_card" string="Input Card Inf." class="btn-warning" type="object"/>
+                                <button name="create_square_customer" string="Create Square Customer" class="btn-primary" type="object"/>
+                                <field name="square_card_nonce"/>
+                                <field name="square_customer_id"/>
+                                <button name="reset_square_information" string="Reset Information" class="btn-danger" type="object" confirm="Are you sure to reset information?"/>
+                            </group>
+                            <group>
+                                <button name="create_square_card" string="Create Square Card" class="btn-primary" type="object"/>
+                                <button name="create_square_payment" string="Create Square Payment" class="btn-success" type="object" confirm="Are you sure to create payment?"/>
+                                <field name="square_card_id"/>
+                                <field name="square_payment_id"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
