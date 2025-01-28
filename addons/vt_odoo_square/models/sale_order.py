@@ -213,6 +213,17 @@ class SaleOrder(models.Model):
         if response.status_code == 200:
             json_response = response.json()
             self.square_card_id = json_response['card']['id']
+            
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'type': 'success',
+                    'sticky': False,
+                    'message': _("Square Card has been created!"),
+                    'next': {'type': 'ir.actions.act_window_close'},
+                }
+            }
         else:
             # Log the detailed error for debugging purposes
             _logger.error("Error retrieving access token: %s", response.text)
