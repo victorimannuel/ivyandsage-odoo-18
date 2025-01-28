@@ -6,7 +6,7 @@
                 <h1>Authorization Successful!</h1>
                 <p>Your application has been successfully authorized. You can now use the features provided by the Faire API.</p>
                 <!-- <p><strong>Access Token:</strong> <t t-esc="request.params.accessToken" /></p> -->
-                <p><a href="/web">Go back to Dashboard</a></p>
+                <p><a href="/odoo/settings#vt_odoo_faire">Go back to OrderFlow</a></p>
             </div>
         </t>
     </template>
