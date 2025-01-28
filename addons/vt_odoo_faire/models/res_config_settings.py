@@ -102,7 +102,7 @@ class ResConfigSettings(models.TransientModel):
         
         if response.status_code == 200:
             json_response = response.json()
-            self.env['ir.config_parameter'].sudo().set_param('vt_odoo_faire.faire_oauth_access_token', json_response.get('accessToken'))
+            self.env['ir.config_parameter'].sudo().set_param('vt_odoo_faire.faire_oauth_access_token', json_response.get('access_token'))
         else:
             # Log the detailed error for debugging purposes
             _logger.error("Error retrieving access token: %s", response.text)
@@ -120,21 +120,21 @@ class ResConfigSettings(models.TransientModel):
         }
         _logger.info("Revoke payload: %s", payload)
         
-        # # Send POST request using json
-        # headers = {"Content-Type": "application/json"}
-        # response = requests.post(url, json=payload, headers=headers)
+        # Send POST request using json
+        headers = {"Content-Type": "application/json"}
+        response = requests.post(url, json=payload, headers=headers)
         
-        # # Log the response content for debugging
-        # _logger.info("Revoke token response: %s", response.text)
+        # Log the response content for debugging
+        _logger.info("Revoke token response: %s", response.text)
         
-        # if response.status_code == 200:
-        #     self.env['ir.config_parameter'].set_param('vt_odoo_faire.faire_oauth_access_token', False)
-        #     # Unlink the token record
-        #     self.env['ir.config_parameter'].search([('key', '=', 'vt_odoo_faire.faire_oauth_access_token')]).unlink
-        # else:
-        #     # Log the detailed error for debugging purposes
-        #     _logger.error("Error revoking access token: %s", response.text)
-        #     return None
+        if response.status_code == 200:
+            # self.env['ir.config_parameter'].set_param('vt_odoo_faire.faire_oauth_access_token', False)
+            # Unlink the token record
+            self.env['ir.config_parameter'].search([('key', '=', 'vt_odoo_faire.faire_oauth_access_token')]).unlink()
+        else:
+            # Log the detailed error for debugging purposes
+            _logger.error("Error revoking access token: %s", response.text)
+            return None
         
     def convert_to_timezone(self, user_timezone, utc_time_str):
         """
