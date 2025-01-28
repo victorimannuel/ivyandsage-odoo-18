@@ -220,7 +220,7 @@ class SaleOrder(models.Model):
                 'params': {
                     'type': 'success',
                     'sticky': False,
-                    'message': _("Square Card has been created!"),
+                    'message': _("Square card has been created!"),
                     'next': {'type': 'ir.actions.act_window_close'},
                 }
             }
