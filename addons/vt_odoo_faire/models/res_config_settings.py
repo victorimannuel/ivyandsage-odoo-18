@@ -102,7 +102,7 @@ class ResConfigSettings(models.TransientModel):
         
         if response.status_code == 200:
             json_response = response.json()
-            self.env['ir.config_parameter'].set_param('vt_odoo_faire.faire_oauth_access_token', json_response.get('accessToken'))
+            self.env['ir.config_parameter'].sudo().set_param('vt_odoo_faire.faire_oauth_access_token', json_response.get('accessToken'))
         else:
             # Log the detailed error for debugging purposes
             _logger.error("Error retrieving access token: %s", response.text)
