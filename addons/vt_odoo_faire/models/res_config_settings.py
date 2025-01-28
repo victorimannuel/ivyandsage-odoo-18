@@ -311,6 +311,17 @@ class ResConfigSettings(models.TransientModel):
                         'min_quantity': related_product.min_qty or 0,
                     })
                     
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'type': 'success',
+                'sticky': False,
+                'message': _("Products have been synced!"),
+                'next': {'type': 'ir.actions.act_window_close'},
+            }
+        }
+        
     def get_and_create_variant_options(self, products):
         variant_option_list = []
         for product in products:
@@ -452,3 +463,14 @@ class ResConfigSettings(models.TransientModel):
         print(f"Status Code: {response.status_code}")
         _logger.info(f"Status Code: {response.status_code}")
         # print(f"Response: {response.json()}")
+        
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'type': 'success',
+                'sticky': False,
+                'message': _("Orders have been synced!"),
+                'next': {'type': 'ir.actions.act_window_close'},
+            }
+        }
