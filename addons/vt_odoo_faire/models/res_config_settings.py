@@ -103,6 +103,17 @@ class ResConfigSettings(models.TransientModel):
         if response.status_code == 200:
             json_response = response.json()
             self.env['ir.config_parameter'].set_param('vt_odoo_faire.faire_oauth_access_token', json_response.get('access_token'))
+            
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'type': 'success',
+                    'sticky': False,
+                    'message': _("API Authenticated!"),
+                    'next': {'type': 'ir.actions.act_window_close'},
+                }
+            }
         else:
             # Log the detailed error for debugging purposes
             _logger.error("Error retrieving access token: %s", response.text)
@@ -132,6 +143,17 @@ class ResConfigSettings(models.TransientModel):
             # Unlink the token record
             self.env['ir.config_parameter'].search([('key', '=', 'vt_odoo_faire.faire_oauth_access_token')]).unlink()
             self.env['ir.config_parameter'].search([('key', '=', 'vt_odoo_faire.faire_authorization_code')]).unlink()
+            
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'type': 'success',
+                    'sticky': False,
+                    'message': _("Token revoked!"),
+                    'next': {'type': 'ir.actions.act_window_close'},
+                }
+            }
         else:
             # Log the detailed error for debugging purposes
             _logger.error("Error revoking access token: %s", response.text)
