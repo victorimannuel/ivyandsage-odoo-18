@@ -450,4 +450,5 @@ class ResConfigSettings(models.TransientModel):
                 faire_order.write(values)
         
         print(f"Status Code: {response.status_code}")
+        _logger.info(f"Status Code: {response.status_code}")
         # print(f"Response: {response.json()}")
